@@ -19,7 +19,8 @@ export default {
         addTask(state, data) {
             state.tasks.push({
                 id: state.tasks.length + 1,
-                name: data,
+                name: data.name,
+                desc: data.desc ? data.desc : '',
                 isDone: false
             })
         },

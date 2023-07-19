@@ -1,0 +1,47 @@
+$primary: #100E1C
+$text: #706B7A
+$light: #FAFAFA
+$light-hover: #F4F4F4
+$dark: #403E49
+$green: #02B36E
+$border: #E7E7F3
+$gray: #8F8C94
+$light-gray: #AEABB3
+$light-violent: #EFF2FC
+$light-violent-hover: #E3E8FC
+$violent: #5C33B9
+$violent-hover: #441F99
+$error: #E58A9D
+$error-text: #CE2D4F
+
+$mobile-size: 920px // макет 320
+$tablet-size: 1160px // макет 1024
+$desktop-small: 1300px // макет 1280
+$desktop-medium: 1600px // макет 1920
+$desktop-big: 2000px // макет 2560
+
+@mixin _1920
+    @media screen and (max-width: $desktop-big)
+        @content
+
+@mixin _1366
+    @media screen and (max-width: $desktop-medium)
+        @content
+
+@mixin _1024
+    @media screen and (max-width: $tablet-size)
+        @content
+
+@mixin _320
+    @media screen and (max-width: $mobile-size)
+        @content
+
+@mixin _text ($color, $weight, $size, $line-height)
+    @if $color != null
+        color: $color
+    @if $weight != null
+        font-weight: $weight
+    @if $size != null
+        font-size: $size
+    @if $line-height != null
+        line-height: $line-height

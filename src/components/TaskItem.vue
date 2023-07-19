@@ -1,5 +1,7 @@
 <template>
-  <div :class="[
+  <div 
+    @click.self="open(item.isDone)"
+    :class="[
       'task',
       {
         done: item.isDone
@@ -8,34 +10,14 @@
   >
     <span 
       class="task-name"
-      v-if="!edit"
       @click="changeDoneTask"
     >
       {{ item.name }}
     </span>
-    <form 
-      v-else 
-      class="task-edit"
-      @submit.prevent="editTask"
-    >
-      <input 
-        v-click-outside="clickOut"
-        type="text" 
-        placeholder="Редактировать" 
-        autofocus
-        v-model="editTaskInput" 
-      >
-      <button-cmp 
-        v-if="editTaskInput !== item.name"
-        icon="check"
-        @event="editTask"
-      >
-      </button-cmp>
-    </form>
     <div class="task-buttons">
       <button-cmp 
         icon="edit"
-        @event="edit = true"
+        @event="editTask"
       >
       </button-cmp>
       <button-cmp 
@@ -58,8 +40,6 @@ export default {
   },
   data() {
     return {
-      editTaskInput: '',
-      edit: false,
     }
   },
   components: {
@@ -67,26 +47,39 @@ export default {
   },
   methods: {
     ...mapMutations('tasks', ['setTask', 'setDoneTask']),
+    ...mapMutations('modal', ['openModal']),
 
     deleteItem() {
       this.setTask({id: this.item.id})
     },
 
     editTask() {
-      this.setTask({
-        ...this.item,
-        name: this.editTaskInput,
+      this.openModal({
+        newState: 'addTask',
+        props: {
+            title: 'редактировать',
+            type: 'edit',
+            item: this.item
+        },
       })
-      this.edit = false
     },
 
     changeDoneTask() {
       this.setDoneTask(this.item.id)
     },
 
-    clickOut() {
-      this.edit = false
-    },
+    open(done) {
+      !done &&
+        this.openModal({
+            newState: 'addTask',
+            props: {
+                title: 'просмотр',
+                type: 'view',
+                item: this.item
+            },
+        })
+
+    }
   },
   mounted() {
     this.editTaskInput = this.item.name
@@ -94,46 +87,44 @@ export default {
 }
 </script>
 
-<style scoped>
-.task {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+<style lang="sass" scoped>
+.task 
+  display: flex
+  justify-content: space-between
+  align-items: center
+  border-radius: 10px
+  border: 1px solid #E6E4F0
+  background: #F9F8FF
+  padding: 12px 10px
 
-.task.done {
-  opacity: 0.5;
-}
-.task.done .task-name {
-  text-decoration: line-through;
-}
+  &.done 
+    opacity: 0.5
 
-.task.done .task-buttons {
-  pointer-events: none;
-}
+  &.done .task-name 
+    text-decoration: line-through
+  
 
-.task input {
-  padding: 8px;
-}
+  &.done .task-buttons
+    pointer-events: none
 
-.task-name {
-  padding: 10px;
-  cursor: pointer;
-}
+  & input
+    padding: 8px
 
-.task-buttons, .task-edit {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
+  &-name 
+    padding: 10px
+    cursor: pointer
 
-.task-button {
-  opacity: 0.7;
-  cursor: pointer;
-  transition: .3s;
-}
-.task-button:hover {
-  opacity: 1;
-}
+  &-buttons, &-edit 
+    display: flex
+    align-items: center
+    gap: 20px
 
+
+  &-button 
+    opacity: 0.7
+    cursor: pointer
+    transition: .3s
+
+    &:hover 
+      opacity: 1
 </style>

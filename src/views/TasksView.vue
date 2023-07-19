@@ -2,17 +2,12 @@
   <section class="container">
     <router-link to="/">Назад</router-link>
     <h1>Задачи</h1>
-    <form @submit.prevent="handlerAddTask" class="tasks-add">
-      <input 
-        type="text" 
-        placeholder="добавить задачу" 
-        v-model="newTask"
-      >
-      <button-cmp 
-        icon="add"
-        @event="handlerAddTask"
-      ></button-cmp>
-    </form>
+    <button-cmp 
+      icon="add"
+      text="Добавить задачу"
+      border
+      @event="handlerAddTask"
+    ></button-cmp>
     <div class="tasks-cards" v-for="task in tasks" :key="task.id">
       <task-item 
         :item="task"
@@ -43,20 +38,23 @@ export default {
   methods: {
     ...mapActions('tasks', ['getTasks']),
     ...mapMutations('tasks', ['addTask']),
+    ...mapMutations('modal', ['openModal']),
     handlerAddTask() {
-      if (this.newTask) {
-        this.addTask(this.newTask)
-        this.newTask = ''
-      }
+      this.openModal({
+            newState: 'addTask',
+            props: {
+                title: 'создать',
+                type: 'add',
+            },
+        })
     }
   },
 }
 </script>
 
-<style>
-  .tasks-add {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-  }
+<style lang="sass">
+  .tasks-add 
+    display: flex
+    gap: 20px
+    justify-content: center
 </style>

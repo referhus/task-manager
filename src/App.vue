@@ -1,29 +1,40 @@
 <template>
   <div id="app">
     <router-view/>
+    <modal-cmp/>
   </div>
 </template>
 
-<style>
+<script>
+import modalCmp from './components/modals/modalCmp.vue';
+export default {
+  data() {
+    return {
+    };
+  },
+  components: {
+    modalCmp
+  },
+}
 
-* {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  padding: 0;
+</script>
+
+<style lang="sass">
+* 
+  font-family: Avenir, Helvetica, Arial, sans-serif
+  font-size: 16px
+  padding: 0
   margin: 0
-}
-#app {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-}
 
-.container {
-  max-width: 920px;
-  width: 100%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+  body
+    width: 100%
+
+.container 
+  max-width: 920px
+  width: 100%
+  margin: 0 auto
+  display: flex
+  flex-direction: column
+  gap: 10px
+
 </style>
