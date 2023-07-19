@@ -55,7 +55,7 @@ export default {
 
     editTask() {
       this.openModal({
-        newState: 'addTask',
+        newState: 'modalTask',
         props: {
             title: 'редактировать',
             type: 'edit',
@@ -71,7 +71,7 @@ export default {
     open(done) {
       !done &&
         this.openModal({
-            newState: 'addTask',
+            newState: 'modalTask',
             props: {
                 title: 'просмотр',
                 type: 'view',
