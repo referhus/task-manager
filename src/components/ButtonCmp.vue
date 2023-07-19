@@ -32,7 +32,7 @@ export default {
       opacity: 1
 
     &._border
-      padding: 10px
+      padding: 5px 10px
       border: 1px solid gray 
       border-radius: 10px
 

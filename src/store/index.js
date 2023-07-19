@@ -1,12 +1,15 @@
 import tasks from './modules/tasks';
 import modal from './modules/modal';
+import notification from './modules/notification';
 import createPersistedState from 'vuex-persistedstate';
 
 import { createStore } from 'vuex'
 
 export default createStore({
   plugins: [
-    createPersistedState()
+    createPersistedState({
+      paths: ['tasks']
+    })
   ],
   state: {
   },
@@ -19,5 +22,6 @@ export default createStore({
   modules: {
     tasks,
     modal,
+    notification
   },
 })

@@ -31,7 +31,7 @@
 
 <script>
 import ButtonCmp from '@/components/ButtonCmp';
-import { mapMutations } from "vuex";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   name: 'add-task',
@@ -48,20 +48,38 @@ export default {
       isValid: true,
     }
   },
+  computed: {
+    ...mapState('notification', ['notifications']),
+  },
   methods: {
     ...mapMutations('modal', ['closeModal']),
     ...mapMutations('tasks', ['addTask', 'setTask']),
+    ...mapMutations('notification', ['setNotification', 'closeNotification']),
 
     handlerBtn() {
       switch (this.props.type) {
         case 'add':
           this.addTask(this.task)
+          this.setNotification({
+            type: 'success',
+            text: 'Задача успешно создана!'
+          })
+          setTimeout(() => {
+            this.closeNotification(this.notifications.length)
+          }, 4000)
           break
         case 'edit':
             this.setTask({
               ...this.props.item,
               ...this.task
             })
+            this.setNotification({
+              type: 'success',
+              text: 'Задача успешно изменена!'
+            })
+            setTimeout(() => {
+              this.closeNotification(this.notifications.length)
+            }, 4000)
           break
       }
 
@@ -91,7 +109,11 @@ export default {
   
   input, textarea
     padding: 5px
+    border-radius: 5px
+    border: 1px solid gray
+    outline: none
 
   textarea
     resize: none
+    
 </style>

@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import ButtonCmp from '@/components/ButtonCmp';
 
 export default {
@@ -45,17 +45,28 @@ export default {
   components: {
     ButtonCmp
   },
+  computed: {
+    ...mapState('notification', ['notifications']),
+  },
   methods: {
     ...mapMutations('tasks', ['setTask', 'setDoneTask']),
     ...mapMutations('modal', ['openModal']),
+    ...mapMutations('notification', ['setNotification', 'closeNotification']),
 
     deleteItem() {
       this.setTask({id: this.item.id})
+      this.setNotification({
+        type: 'error',
+        text: 'Задача успешно удалена!'
+      })
+      setTimeout(() => {
+        this.closeNotification(this.notifications.length)
+      }, 4000)
     },
 
     editTask() {
       this.openModal({
-        newState: 'modalTask',
+        newState: 'ModalTask',
         props: {
             title: 'редактировать',
             type: 'edit',
@@ -71,18 +82,16 @@ export default {
     open(done) {
       !done &&
         this.openModal({
-            newState: 'modalTask',
+            newState: 'ModalTask',
             props: {
                 title: 'просмотр',
                 type: 'view',
                 item: this.item
             },
         })
-
     }
   },
   mounted() {
-    this.editTaskInput = this.item.name
   }
 }
 </script>

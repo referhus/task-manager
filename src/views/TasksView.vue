@@ -1,6 +1,5 @@
 <template>
   <section class="container">
-    <router-link to="/">Назад</router-link>
     <h1>Задачи</h1>
     <button-cmp 
       icon="add"
@@ -41,7 +40,7 @@ export default {
     ...mapMutations('modal', ['openModal']),
     handlerAddTask() {
       this.openModal({
-        newState: 'modalTask',
+        newState: 'ModalTask',
         props: {
             title: 'создать',
             type: 'add',
