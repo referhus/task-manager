@@ -1,12 +1,10 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
 import tasks from './modules/tasks';
 import modal from './modules/modal';
 import createPersistedState from 'vuex-persistedstate';
 
-Vue.use(Vuex)
+import { createStore } from 'vuex'
 
-export default new Vuex.Store({
+export default createStore({
   plugins: [
     createPersistedState()
   ],

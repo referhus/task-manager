@@ -1,10 +1,10 @@
 import { disableScroll, enableScroll} from "@/utils/scroll";
 export default {
     namespaced: true,
-    state: {
+    state:  () => ({
         modalComponent: null,
         modalProps: null,
-    },
+    }),
     getters: {
         modalComponent(state) {
             return state.modalComponent;

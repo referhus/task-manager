@@ -1,8 +1,8 @@
 export default {
     namespaced: true,
-    state: {
+    state: () => ({
         tasks: [],
-    },
+    }),
     getters: {
         tasks(state) {
             return state.tasks;

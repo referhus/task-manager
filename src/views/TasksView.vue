@@ -41,12 +41,12 @@ export default {
     ...mapMutations('modal', ['openModal']),
     handlerAddTask() {
       this.openModal({
-            newState: 'modalTask',
-            props: {
-                title: 'создать',
-                type: 'add',
-            },
-        })
+        newState: 'modalTask',
+        props: {
+            title: 'создать',
+            type: 'add',
+        },
+      })
     }
   },
 }
