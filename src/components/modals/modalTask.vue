@@ -4,10 +4,10 @@
             {{ props.title }}
         </h2>
         <input 
-          v-model="task.name"
-          type="text" 
-          placeholder="Заголовок"
-          :disabled="props.type == 'view'"
+            v-model="task.name"
+            type="text" 
+            placeholder="Заголовок"
+            :disabled="props.type == 'view'"
         >
         <textarea
             v-model="task.desc"
@@ -17,14 +17,14 @@
             :disabled="props.type == 'view'"
         />
         <span 
-          v-if="props.type !== 'view'" 
-          class="add-block__desc-count"> {{ task.desc.length }}/200 символов </span>
+            v-if="props.type !== 'view'" 
+            class="add-block__desc-count"> {{ task.desc.length }}/200 символов </span>
         <button-cmp
-          v-if="props.type !== 'view'" 
-          class="add-block__btn"
-          :text="'Отправить'"
-          border
-          @event="handlerBtn"
+            v-if="props.type !== 'view'" 
+            class="add-block__btn"
+            :text="'Отправить'"
+            border
+            @event="handlerBtn"
         ></button-cmp>
     </div>
 </template>
@@ -34,86 +34,87 @@ import ButtonCmp from '@/components/ButtonCmp';
 import { mapState, mapMutations } from "vuex";
 
 export default {
-  name: 'add-task',
-  props: ['props'],
-  components: {
-    ButtonCmp,
-  },
-  data(){
-    return {
-      task: {
-        name: '',
-        desc: ''
-      },
-      isValid: true,
-    }
-  },
-  computed: {
-    ...mapState('notification', ['notifications']),
-  },
-  methods: {
-    ...mapMutations('modal', ['closeModal']),
-    ...mapMutations('tasks', ['addTask', 'setTask']),
-    ...mapMutations('notification', ['setNotification', 'closeNotification']),
+    name: 'add-task',
+    props: ['props'],
+    components: {
+        ButtonCmp,
+    },
+    data() {
+        return {
+            task: {
+                name: '',
+                desc: ''
+            },
+            isValid: true,
+        }
+    },
+    computed: {
+        ...mapState('notification', ['notifications']),
+    },
+    methods: {
+        ...mapMutations('modal', ['closeModal']),
+        ...mapMutations('tasks', ['addTask', 'setTask']),
+        ...mapMutations('notification', ['setNotification', 'closeNotification']),
 
-    handlerBtn() {
-      switch (this.props.type) {
+        handlerBtn() {
+        // toDo: добавить валидацию
+
+        switch (this.props.type) {
         case 'add':
-          this.addTask(this.task)
-          this.setNotification({
-            type: 'success',
-            text: 'Задача успешно создана!'
-          })
-          setTimeout(() => {
-            this.closeNotification(this.notifications.length)
-          }, 4000)
-          break
-        case 'edit':
-            this.setTask({
-              ...this.props.item,
-              ...this.task
-            })
+            this.addTask(this.task)
             this.setNotification({
-              type: 'success',
-              text: 'Задача успешно изменена!'
+                type: 'success',
+                text: 'Задача успешно создана!'
             })
             setTimeout(() => {
-              this.closeNotification(this.notifications.length)
+                this.closeNotification(this.notifications.length)
             }, 4000)
-          break
-      }
+        break
+        case 'edit':
+            this.setTask({
+                ...this.props.item,
+                ...this.task
+            })
+            this.setNotification({
+                type: 'success',
+                text: 'Задача успешно изменена!'
+            })
+            setTimeout(() => {
+                this.closeNotification(this.notifications.length)
+            }, 4000)
+        break
+    }
 
-      this.closeModal()
+        this.closeModal()
     },
 
-  },
-  mounted() {
-    if (this.props.item) {
-      this.task.name = this.props.item.name
-      this.props.item.desc && (this.task.desc = this.props.item.desc)
+    },
+    mounted() {
+        if (this.props.item) {
+            this.task.name = this.props.item.name
+            this.props.item.desc && (this.task.desc = this.props.item.desc)
+        }
     }
-  }
-
 }
 </script>
 
 <style lang="sass">
 .add-block
-  display: flex
-  flex-direction: column
-  gap: 10px
+    display: flex
+    flex-direction: column
+    gap: 10px
 
-  &__btn
-    background: gray
-    color: white
+    &__btn
+        background: gray
+        color: white
   
-  input, textarea
-    padding: 5px
-    border-radius: 5px
-    border: 1px solid gray
-    outline: none
+    input, textarea
+        padding: 5px
+        border-radius: 5px
+        border: 1px solid gray
+        outline: none
 
-  textarea
-    resize: none
+    textarea
+        resize: none
     
 </style>

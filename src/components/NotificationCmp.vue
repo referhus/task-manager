@@ -11,7 +11,7 @@
                 class="notification-icon material-icons" 
                 v-text="notification.type == 'success' ? 'check_circle_outline' : 'report_problem'"
             ></span>
-            <span class="notification-body"> {{ notification.text }}</span>
+            <span class="notification-body">{{ notification.text }}</span>
         </div>
     </div>
 </template>
@@ -20,21 +20,17 @@
 import { mapState, mapMutations } from "vuex";
 
 export default {
-  name: 'notification-cmp',
-  components: {
-  },
-  data(){
-    return {
-    }
-  },
-  computed: {
-    ...mapState('notification', ['notifications']),
-  },
-  methods: {
-    ...mapMutations('notification', ['closeNotification']),
-  },
-  mounted() {
-  }
+    name: 'notification-cmp',
+    data() {
+        return {
+        }
+    },
+    computed: {
+        ...mapState('notification', ['notifications']),
+    },
+    methods: {
+        ...mapMutations('notification', ['closeNotification']),
+    },
 }
 </script>
 
