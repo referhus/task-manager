@@ -1,3 +1,5 @@
+import { dateFormat } from "@/utils/dateFormat";
+
 export default {
     namespaced: true,
     state: () => ({
@@ -21,6 +23,7 @@ export default {
                 id: state.tasks.length + 1,
                 name: data.name,
                 desc: data.desc ? data.desc : '',
+                date: dateFormat(),
                 isDone: false
             })
         },

@@ -1,18 +1,19 @@
 <template>
 	<section class="container">
-		<h1>Задачи</h1>
-		<button-cmp 
-			icon="add"
-			text="Добавить задачу"
-			border
-			@event="handlerAddTask"
-		></button-cmp>
+		<div class="tasks-head">
+			<h1>Задачи</h1>
+			<button-cmp 
+				icon="add"
+				border
+				@event="handlerAddTask"
+			></button-cmp>
+		</div>
 		<div 
 			class="tasks-cards" 
-			v-for="task in tasks" 
-			:key="task.id"
 		>
 			<task-item 
+				v-for="task in tasks" 
+				:key="task.id"
 				:item="task"
 			></task-item>
 		</div>
@@ -54,3 +55,24 @@ export default {
 	},
 }
 </script>
+
+
+<style lang="sass">
+	.tasks
+		&-head 
+			background: white	
+			position: sticky
+			top: 20px
+			display: flex
+			align-items: center
+			justify-content: space-between
+			gap: 10px
+			z-index: 1
+
+
+		&-cards
+			display: flex
+			flex-wrap: wrap
+			gap: 16px
+
+</style>

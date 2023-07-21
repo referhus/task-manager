@@ -1,13 +1,5 @@
 <template>
     <aside class="navigation">
-        <div 
-            class="navigation-show"
-            @click="hide = !hide"
-        >
-            <span :class="['material-icons ', {_active: !hide}]">apps</span>
-            <span>Menu</span>
-        </div>
-
         <template 
             v-for="(item, i) in nav" 
             :key="i"
@@ -18,7 +10,7 @@
                 :class="{_disabled: item.disabled}"
             >
                 <span class="material-icons">{{ item.icon }}</span>
-                <span v-if="!hide">{{ item.name }}</span>
+                <span>{{ item.name }}</span>
             </router-link>
         </template>
     </aside>
@@ -28,7 +20,6 @@
     export default {
         data() {
             return {
-                hide: true,
                 nav: [
                     {
                         link: '/',
@@ -60,44 +51,36 @@
 
 <style lang="sass">
     .navigation
+        grid-area: area-menu
+        border-right: 1px solid #E6E4F0
         padding: 20px
-        position: fixed
-        top: 0
-        left: 0
         display: flex
         flex-direction: column
         gap: 10px
         background: white
-        max-width: 140px
+        flex-shrink: 0
         width: 100%
+        height: 100vh
         z-index: 2
 
         &-link 
             display: flex
             align-items: center
             gap: 10px
-            color: black
+            color: gray
+            padding: 10px
+            border-radius: 10px
+            transition: .3s
 
             &.router-link-active 
-                color: #8dd1f8
+                background: #57F
+                & > span
+                    color: white
 
             &._disabled
                 opacity: 0.5
                 pointer-events: none
-
-        &-show 
-            cursor: pointer
-            width: max-content
-            user-select: none
-            display: flex
-            align-items: center
-            gap: 5px
-            .material-icons 
-                border-radius: 5px
-                padding: 2px
-                &._active
-                    background: #ececec
-
+                background: #E9E8EC
         
 
 </style>

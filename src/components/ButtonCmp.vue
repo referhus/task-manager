@@ -31,13 +31,15 @@ export default {
     align-items: center
     gap: 10px
     width: max-content
+    color: gray
+    transition: .3s
 
     &:hover 
         opacity: 1
 
     &._border
-        padding: 5px 10px
+        padding: 5px
         border: 1px solid gray 
-        border-radius: 10px
+        border-radius: 5px
 
 </style>
