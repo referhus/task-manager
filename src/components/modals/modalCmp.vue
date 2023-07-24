@@ -43,6 +43,7 @@
     justify-content: center
     align-items: center
     background: rgba(#000000, 0.5)
+    backdrop-filter: blur(3px)
     z-index: 100
     &__content
         position: relative

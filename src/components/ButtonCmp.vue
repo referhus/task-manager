@@ -34,6 +34,7 @@ export default {
     color: gray
     transition: .3s
 
+
     &:hover 
         opacity: 1
 

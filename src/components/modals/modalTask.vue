@@ -149,7 +149,6 @@ export default {
         padding: 5px
         border-radius: 5px
         border: 1px solid gray
-        outline: none
 
     textarea
         resize: none

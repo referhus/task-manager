@@ -52,7 +52,6 @@
 <style lang="sass">
     .navigation
         grid-area: area-menu
-        border-right: 1px solid #E6E4F0
         padding: 20px
         display: flex
         flex-direction: column

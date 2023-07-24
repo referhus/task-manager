@@ -111,6 +111,7 @@ export default {
 
         &:hover
             background: #57F
-            color: white
+            span
+                color: white
 
 </style>

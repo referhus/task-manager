@@ -42,11 +42,14 @@ export default {
 
     body
         width: 100%
-
+    
+    input 
+        outline: none
+        &._error
+            border: 1px solid red
 .main
     display: grid
-    grid-template-columns: 200px 1fr 200px
-    gap: 10px
+    grid-template-columns: 200px 1fr 220px
     grid-template-areas: 'area-menu area-content area-weather'
     padding: 0 40px
 
@@ -57,6 +60,9 @@ export default {
     flex-direction: column
     gap: 10px
     padding: 20px
+    background: #F9F8FF
+    border-right: 1px solid #E6E4F0
+    border-left: 1px solid #E6E4F0
 
 a 
     text-decoration: none

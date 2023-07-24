@@ -15,16 +15,6 @@
                 @handleItem="handleItem"
             >
             </action-list>
-            <!-- <button-cmp 
-                icon="edit"
-                @event="editTask"
-            >
-            </button-cmp>
-            <button-cmp 
-                icon="delete"
-                @event="deleteItem"
-            >
-            </button-cmp> -->
         </div>
         <div 
             class="task-body"
