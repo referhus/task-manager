@@ -9,9 +9,6 @@ export default {
         tasks(state) {
             return state.tasks;
         },
-        tasksResults(state, data) {
-            return state.tasks.filter(item => item.name.toLowerCase().includes(data))
-        }
     },
     mutations: {
         /* eslint no-param-reassign: 'off' */
@@ -23,6 +20,7 @@ export default {
                 id: state.tasks.length + 1,
                 name: data.name,
                 desc: data.desc ? data.desc : '',
+                folders: data.folders ? data.folders : [],
                 date: dateFormat(),
                 isDone: false
             })

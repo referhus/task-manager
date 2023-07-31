@@ -32,6 +32,13 @@
                 {{ item.name }}
             </span>
         </div>
+        <div class="task-folders">
+            <folder-item 
+                v-for="folder in item.folders" 
+                :key="`folder-${folder.id}`"
+                :item="folder"
+            ></folder-item>
+        </div>
 
     </div>
 </template>
@@ -39,6 +46,8 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 import ActionList from '@/components/ActionList';
+import FolderItem from '@/components/FolderItem';
+
 // import ButtonCmp from '@/components/ButtonCmp';
 
 export default {
@@ -61,7 +70,8 @@ export default {
         }
     },
     components: {
-        ActionList
+        ActionList,
+        FolderItem
         // ButtonCmp,
     },
     computed: {
@@ -71,7 +81,6 @@ export default {
         ...mapMutations('tasks', ['setTask', 'setDoneTask']),
         ...mapMutations('modal', ['openModal']),
         ...mapMutations('notification', ['setNotification', 'closeNotification']),
-
         deleteTask() {
             this.setTask({id: this.item.id})
             this.setNotification({
@@ -121,7 +130,7 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
     .task 
         display: grid
         grid-template-columns: 1fr 68px
@@ -136,6 +145,9 @@ export default {
         cursor: pointer
         transition: .3s
 
+        @media screen and (max-width: 1024px)
+            width: 100%
+
         &:hover 
             background: rgba(242,241,243, .7)
 
@@ -147,6 +159,7 @@ export default {
             font-size: 12px
             color: #A3A3A3
             pointer-events: none
+            margin-top: auto
 
         &-body 
             grid-area: area-body
@@ -190,6 +203,11 @@ export default {
             &:hover 
                 opacity: 1
 
+        &-folders 
+            width: 100%
+            display: flex 
+            flex-wrap: wrap
+            gap: 10px
         &.done 
             .task
                 &-name 

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-
+import FoldersView from '../views/FoldersView.vue'
+FoldersView
 const routes = [
     {
         path: '/',
@@ -11,6 +12,11 @@ const routes = [
         path: '/tasks',
         name: 'tasks',
         component: () => import('../views/TasksView.vue')
+    },
+    {
+        path: '/folders',
+        name: 'folders',
+        component: () => import('../views/FoldersView.vue')
     }
 ]
 

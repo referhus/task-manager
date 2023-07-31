@@ -1,4 +1,5 @@
 import tasks from './modules/tasks';
+import folders from './modules/folders';
 import modal from './modules/modal';
 import notification from './modules/notification';
 import createPersistedState from 'vuex-persistedstate';
@@ -21,6 +22,7 @@ export default createStore({
     },
     modules: {
         tasks,
+        folders,
         modal,
         notification
     },

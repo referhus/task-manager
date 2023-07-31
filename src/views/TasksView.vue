@@ -60,7 +60,7 @@ export default {
 <style lang="sass">
 	.tasks
 		&-head 
-			background: white	
+			background: #F9F8FF	
 			position: sticky
 			top: 20px
 			display: flex
@@ -68,7 +68,6 @@ export default {
 			justify-content: space-between
 			gap: 10px
 			z-index: 1
-
 
 		&-cards
 			display: flex

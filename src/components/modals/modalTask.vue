@@ -21,14 +21,24 @@
         <span 
             v-if="props.type !== 'view'" 
             class="add-block__desc-count"> {{ task.desc.length }}/200 символов </span>
-            <!-- <dropdown-search
-                :item="category"
-                :id="i"
-                :dropdownList="category.id === 'region' ? true : false"
-                @setElem="setElem"
-                @search="search"
-                classContainer="t-input t-filter-list__item-search"
-            ></dropdown-search> -->
+
+        <dropdown-search
+            v-if="props.type !== 'view'"
+            :item="results"
+            placeholder="Поиск по папкам"
+            :id="'folders'"
+            dropdown-list
+            @setElem="setElem"
+            @search="search"
+        ></dropdown-search>
+
+        <div class="task-folders">
+            <folder-item 
+                v-for="item in task.folders" 
+                :key="`folder-${item.id}`"
+                :item="item"
+            ></folder-item>
+        </div>
 
         <button-cmp
             v-if="props.type !== 'view'" 
@@ -42,26 +52,34 @@
 
 <script>
 import ButtonCmp from '@/components/ButtonCmp';
-import { mapState, mapMutations } from "vuex";
+import DropdownSearch from '@/components/DropdownSearch';
+import FolderItem from '@/components/FolderItem';
+import { mapState, mapMutations, mapGetters } from "vuex";
 
 export default {
     name: 'add-task',
     props: ['props'],
     components: {
         ButtonCmp,
+        DropdownSearch,
+        FolderItem
     },
     data() {
         return {
             task: {
                 name: '',
                 desc: '', 
-                date: ''
+                date: '',
+                folders: []
             },
             isValid: true,
+            results: []
         }
     },
     computed: {
         ...mapState('notification', ['notifications']),
+        ...mapState('folders', ['folders']),
+        ...mapGetters('folders', ['getFoldersByName'])
     },
     methods: {
         ...mapMutations('modal', ['closeModal']),
@@ -99,28 +117,17 @@ export default {
             }
             this.closeModal()
         },
-        setElem(el) {
-            this.checkedCheckbox[el.id] = el.el.id ? [el.el.id] : [];
-            this.arrFilterSearch[el.id].active = el.el;
-            this.changeCheckbox(el.item, el.id, this.checkedCheckbox[el.id]);
-        },
 
-        changeCheckbox(item, i, arrChecked) {
-            // если тип checkbox
-            if (arrChecked && Array.isArray(arrChecked)) {
-                this.query[item.id] = arrChecked.length ? arrChecked.join() : undefined;
-                // если тип radio
-            } else if (item.type === 'radio') {
-                this.query[item.id] = this.checkedRadio[i] ? this.checkedRadio[i] : undefined;
-            } 
+        setElem(el) {
+            this.task.folders.push(el)
+            console.log(this.task.folders)
         },
 
         search(el) {
-            const index = this.arrFilterSearch.map((el) => el.id).indexOf(el.id);
             if (!el.value) {
-                this.arrFilterSearch[index].value = this.defaultListCategories;
+                this.results = [...this.folders]
             } else {
-                // this.arrFilterSearch[index].value = response.data;
+                this.results = this.getFoldersByName(el.value)
             }
         },
 
@@ -129,7 +136,10 @@ export default {
         if (this.props.item) {
             this.task.name = this.props.item.name
             this.props.item.desc && (this.task.desc = this.props.item.desc)
+            this.props.item.folders.length && (this.task.folders = [...this.props.item.folders])
         }
+        this.results = [...this.folders]
+        
     }
 }
 </script>
@@ -149,6 +159,7 @@ export default {
         padding: 5px
         border-radius: 5px
         border: 1px solid gray
+        width: 100%
 
     textarea
         resize: none

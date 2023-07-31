@@ -1,6 +1,5 @@
 <template>
     <aside class="weather">
-        <!-- toDo: тут будет блок с погодой -->
         <img class="weather-icon" :src="icon" alt="">
         <div class="weather-city" v-if="!edit"> 
             <span> {{ city }} </span>
@@ -45,7 +44,7 @@ export default {
             temp: null,
             edit: false,
             error: '',
-            city: 'Tomsk'
+            city: 'Tomsk',
         }
     },
     components: {
@@ -88,6 +87,7 @@ export default {
     grid-template-columns: 100px 1fr
     grid-template-areas: 'area-icon area-temp' 'area-icon area-city'
     height: max-content
+    position: relative
 
     &-icon 
         grid-area: area-icon

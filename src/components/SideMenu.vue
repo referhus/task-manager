@@ -35,7 +35,6 @@
                         link: '/folders',
                         name: 'Folders',
                         icon: 'folder',
-                        disabled: true
                     },
                     {
                         link: '/calendar',
