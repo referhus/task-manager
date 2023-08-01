@@ -113,6 +113,8 @@ export default {
         box-shadow: 0 0 1px rgba(16, 14, 28, 0.04), 0 2px 16px rgba(16, 14, 28, 0.06)
         backdrop-filter: blur(8px)
         border-radius: 16px
+        max-height: 56px
+        overflow: auto
 
         &__item
             cursor: pointer

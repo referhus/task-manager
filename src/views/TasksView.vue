@@ -1,6 +1,6 @@
 <template>
 	<section class="container">
-		<div class="tasks-head">
+		<div class="container-head">
 			<h1>Задачи</h1>
 			<button-cmp 
 				icon="add"
@@ -9,7 +9,7 @@
 			></button-cmp>
 		</div>
 		<div 
-			class="tasks-cards" 
+			class="tasks-cards cards" 
 		>
 			<task-item 
 				v-for="task in tasks" 
@@ -58,20 +58,5 @@ export default {
 
 
 <style lang="sass">
-	.tasks
-		&-head 
-			background: #F9F8FF	
-			position: sticky
-			top: 20px
-			display: flex
-			align-items: center
-			justify-content: space-between
-			gap: 10px
-			z-index: 1
-
-		&-cards
-			display: flex
-			flex-wrap: wrap
-			gap: 16px
 
 </style>

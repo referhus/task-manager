@@ -87,7 +87,8 @@ export default {
     grid-template-columns: 100px 1fr
     grid-template-areas: 'area-icon area-temp' 'area-icon area-city'
     height: max-content
-    position: relative
+    position: sticky
+    top: 0
 
     &-icon 
         grid-area: area-icon

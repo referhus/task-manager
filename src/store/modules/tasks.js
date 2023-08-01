@@ -21,8 +21,8 @@ export default {
                 name: data.name,
                 desc: data.desc ? data.desc : '',
                 folders: data.folders ? data.folders : [],
-                date: dateFormat(),
-                isDone: false
+                isDone: false,
+                date: dateFormat()
             })
         },
         setTask(state, data) {
@@ -30,6 +30,14 @@ export default {
             if (index > -1) {
                 !data.name ? state.tasks.splice(index, 1) : state.tasks.splice(index, 1, data)
             } 
+        },
+        setFoldersInTask(state, data) {
+            state.tasks.map((el => {
+                const index = el.folders.map(folder => folder.id).indexOf(data)
+                if (index > -1) {
+                    el.folders.splice(index, 1)
+                }
+            }))
         },
         setDoneTask(state, id) {
             state.tasks.find(el => el.id == id).isDone = !state.tasks.find(el => el.id == id).isDone

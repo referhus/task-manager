@@ -3,13 +3,17 @@
         @click.self="openTask(item.isDone)"
         :class="[
             'task',
+            'item',
             { done: item.isDone }
         ]"
     >
-        <span class="task-date">
+        <span class="item-date task-date">
             {{ item.date }}
         </span>
-        <div class="task-buttons">
+        <div 
+            class="task-buttons"
+            v-if="!noActions"
+        >
             <action-list 
                 :list="actionList"
                 @handleItem="handleItem"
@@ -28,16 +32,17 @@
                     done
                 </span> 
             </div>
-            <span class="task-name">
+            <span class="task-name item-name">
                 {{ item.name }}
             </span>
         </div>
-        <div class="task-folders">
-            <folder-item 
-                v-for="folder in item.folders" 
+        <div class="task-tags">
+            <tag-item 
+                v-for="folder in item.folders.slice(0,2)" 
                 :key="`folder-${folder.id}`"
                 :item="folder"
-            ></folder-item>
+            ></tag-item>
+            <span v-if="item.folders.length > 2">...</span>
         </div>
 
     </div>
@@ -46,14 +51,18 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 import ActionList from '@/components/ActionList';
-import FolderItem from '@/components/FolderItem';
+import TagItem from '@/components/TagItem';
 
 // import ButtonCmp from '@/components/ButtonCmp';
 
 export default {
     name: 'TaskItem',
     props: {
-        item: Object
+        item: Object,
+        noActions: {
+            type: Boolean,
+            default: false
+        }
     },
     data() {
         return {
@@ -71,7 +80,7 @@ export default {
     },
     components: {
         ActionList,
-        FolderItem
+        TagItem
         // ButtonCmp,
     },
     computed: {
@@ -131,97 +140,91 @@ export default {
 </script>
 
 <style lang="sass">
-    .task 
-        display: grid
-        grid-template-columns: 1fr 68px
-        gap: 10px
+.task 
+    display: grid
+    grid-template-columns: 1fr 68px
+    gap: 10px
+    align-items: center
+    border-radius: 10px
+    border: 1px solid #E6E4F0
+    background: #FFF
+    padding: 16px
+    width: calc((100% - 16px) / 2)
+    grid-template-areas: 'area-body area-buttons' 'area-tags area-date' 
+    min-height: 122.4px
+
+    @media screen and (max-width: 1024px)
+        width: 100%
+
+    & input
+        padding: 8px
+
+    &-date 
+        grid-area: area-date
+        margin-top: auto
+
+    &-body 
+        grid-area: area-body
+        cursor: pointer
+        display: flex
         align-items: center
-        border-radius: 10px
-        border: 1px solid #E6E4F0
-        background: #FFF
-        padding: 16px
-        width: calc((100% - 16px) / 2)
-        grid-template-areas: 'area-body area-buttons' '. area-date' 
+        gap: 10px
+        overflow: hidden
+
+    &-checkbox
+        width: 19px
+        height: 19px
+        flex-shrink: 0
+        border-radius: 4px
+        border: 2px solid #BBBBBE
+        color: white
+        display: flex
+        justify-content: center
+        align-items: center
+        .material-icons
+            font-size: 16px
+        
+    &-buttons
+        grid-area: area-buttons
+        display: flex
+        align-items: center
+        justify-content: flex-end
+        gap: 20px
+        color: gray
+
+    &-button 
+        opacity: 0.7
         cursor: pointer
         transition: .3s
 
-        @media screen and (max-width: 1024px)
-            width: 100%
-
         &:hover 
-            background: rgba(242,241,243, .7)
+            opacity: 1
 
-        & input
-            padding: 8px
+    .tag 
+        max-width: 110px
 
-        &-date 
-            grid-area: area-date
-            font-size: 12px
-            color: #A3A3A3
-            pointer-events: none
-            margin-top: auto
+    &-tags 
+        grid-area: area-tags
+        width: 100%
+        display: flex 
+        flex-wrap: wrap
+        gap: 10px
+        pointer-events: none
 
-        &-body 
-            grid-area: area-body
-            cursor: pointer
-            display: flex
-            align-items: center
-            gap: 10px
-            overflow: hidden
+    &.done 
+        .task
+            &-name 
+                text-decoration: line-through  
+                color: rgba(85, 119, 255, 0.80)
 
-        &-checkbox
-            width: 19px
-            height: 19px
-            flex-shrink: 0
-            border-radius: 4px
-            border: 2px solid #BBBBBE
-            color: white
-            display: flex
-            justify-content: center
-            align-items: center
-            .material-icons
-                font-size: 16px
+            &-checkbox 
+                background: rgba(85, 119, 255, 0.80)
+                border: none
+                span
+                    color: white
             
-        &-name 
-            white-space: nowrap
-            overflow: hidden
-            text-overflow: ellipsis
-
-        &-buttons
-            grid-area: area-buttons
-            display: flex
-            align-items: center
-            justify-content: flex-end
-            gap: 20px
-            color: gray
-
-        &-button 
-            opacity: 0.7
-            cursor: pointer
-            transition: .3s
-
-            &:hover 
-                opacity: 1
-
-        &-folders 
-            width: 100%
-            display: flex 
-            flex-wrap: wrap
-            gap: 10px
-        &.done 
-            .task
-                &-name 
-                    text-decoration: line-through  
-                    color: rgba(85, 119, 255, 0.80)
-
-                &-checkbox 
-                    background: rgba(85, 119, 255, 0.80)
-                    border: none
-                    span
-                        color: white
-                
-                &-buttons
-                    pointer-events: none
-                    opacity: .5
+            &-buttons, &-tags
+                pointer-events: none
+                opacity: .5
 
 </style>

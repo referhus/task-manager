@@ -6,13 +6,13 @@
         <input 
             v-model="task.name"
             type="text" 
-            placeholder="Заголовок"
+            placeholder="название"
             :disabled="props.type == 'view'"
             autofocus
         >
         <textarea
             v-model="task.desc"
-            placeholder="Описание"
+            placeholder="описание"
             :class="{ 'not-valid': !isValid }"
             class="add-block__desc"
             :disabled="props.type == 'view'"
@@ -25,25 +25,28 @@
         <dropdown-search
             v-if="props.type !== 'view'"
             :item="results"
-            placeholder="Поиск по папкам"
+            placeholder="поиск по папкам"
             :id="'folders'"
             dropdown-list
             @setElem="setElem"
             @search="search"
         ></dropdown-search>
 
-        <div class="task-folders">
-            <folder-item 
-                v-for="item in task.folders" 
+        <div class="task-tags">
+            <tag-item 
+                v-for="(item, key) in task.folders" 
                 :key="`folder-${item.id}`"
                 :item="item"
-            ></folder-item>
+                :id="key"
+                :delete-icon="props.type !== 'view'"
+                @delete-item="deleteItem"
+            ></tag-item>
         </div>
 
         <button-cmp
             v-if="props.type !== 'view'" 
             class="add-block__btn"
-            text="Отправить"
+            text="отправить"
             border
             @event="handlerBtn"
         ></button-cmp>
@@ -53,7 +56,7 @@
 <script>
 import ButtonCmp from '@/components/ButtonCmp';
 import DropdownSearch from '@/components/DropdownSearch';
-import FolderItem from '@/components/FolderItem';
+import TagItem from '@/components/TagItem';
 import { mapState, mapMutations, mapGetters } from "vuex";
 
 export default {
@@ -62,14 +65,13 @@ export default {
     components: {
         ButtonCmp,
         DropdownSearch,
-        FolderItem
+        TagItem
     },
     data() {
         return {
             task: {
                 name: '',
                 desc: '', 
-                date: '',
                 folders: []
             },
             isValid: true,
@@ -131,12 +133,15 @@ export default {
             }
         },
 
+        deleteItem(id) {
+            this.task.folders.splice(id, 1)
+        }
     },
     mounted() {
         if (this.props.item) {
             this.task.name = this.props.item.name
             this.props.item.desc && (this.task.desc = this.props.item.desc)
-            this.props.item.folders.length && (this.task.folders = [...this.props.item.folders])
+            this.props.item.folders?.length && (this.task.folders = [...this.props.item.folders])
         }
         this.results = [...this.folders]
         
@@ -150,18 +155,13 @@ export default {
     flex-direction: column
     gap: 10px
 
+    .task-tags
+        max-height: 80px
+        overflow: auto
+
     &__btn
         background: gray
         span
             color: white
-  
-    input, textarea
-        padding: 5px
-        border-radius: 5px
-        border: 1px solid gray
-        width: 100%
-
-    textarea
-        resize: none
-    
+      
 </style>

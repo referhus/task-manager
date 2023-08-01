@@ -10,7 +10,7 @@
                 :class="{_disabled: item.disabled}"
             >
                 <span class="material-icons">{{ item.icon }}</span>
-                <span>{{ item.name }}</span>
+                <span class="navigation-link__name">{{ item.name }}</span>
             </router-link>
         </template>
     </aside>
@@ -49,36 +49,43 @@
 </script>
 
 <style lang="sass">
-    .navigation
-        grid-area: area-menu
-        padding: 20px
+@import "@/assets/styles/params"
+.navigation
+    grid-area: area-menu
+    padding: 20px
+    display: flex
+    flex-direction: column
+    gap: 10px
+    background: white
+    flex-shrink: 0
+    width: 100%
+    height: 100vh
+    z-index: 2
+    position: sticky
+    top: 0
+
+    &-link 
         display: flex
-        flex-direction: column
+        align-items: center
         gap: 10px
-        background: white
-        flex-shrink: 0
-        width: 100%
-        height: 100vh
-        z-index: 2
+        color: gray
+        padding: 10px
+        border-radius: 10px
+        transition: .3s
 
-        &-link 
-            display: flex
-            align-items: center
-            gap: 10px
-            color: gray
-            padding: 10px
-            border-radius: 10px
-            transition: .3s
+        &.router-link-active 
+            background: #57F
+            & > span
+                color: white
 
-            &.router-link-active 
-                background: #57F
-                & > span
-                    color: white
-
-            &._disabled
-                opacity: 0.5
-                pointer-events: none
-                background: #E9E8EC
+        &._disabled
+            opacity: 0.5
+            pointer-events: none
+            background: #E9E8EC
         
+        &__name
+            @media screen and ( max-width: $tablet-size)
+                display: none
+                
 
 </style>

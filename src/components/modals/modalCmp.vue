@@ -52,8 +52,8 @@
         border: 1px solid #E6E4F0
         background: #F9F8FF
         padding: 12px 10px
-        max-width: 700px
-        min-width: 536px
+        max-width: 500px
+        width: 100%
         overflow: hidden
     &__close
         position: absolute
@@ -111,8 +111,7 @@
 
     @media screen and ( max-width: $tablet-size)
         &__content
-            max-width: 768px
-            min-width: 294px
+            max-width: 400px
             padding: 24px
         &__title
             font-size: 20px

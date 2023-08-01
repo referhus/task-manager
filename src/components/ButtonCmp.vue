@@ -5,6 +5,7 @@
     >
         <span 
             class="material-icons" 
+            :style="color ? `color: ${color}` : ''"
             v-if="icon"
         >{{ icon }}</span>
         <span v-if="text"> {{ text }}</span>
@@ -17,7 +18,8 @@ export default {
     props: {
         icon: String,
         text: String,
-        border: Boolean
+        border: Boolean,
+        color: String
     }
 }
 </script>

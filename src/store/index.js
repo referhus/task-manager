@@ -9,7 +9,7 @@ import { createStore } from 'vuex'
 export default createStore({
     plugins: [
         createPersistedState({
-            paths: ['tasks']
+            paths: ['tasks', 'folders']
         })
     ],
     state: {
