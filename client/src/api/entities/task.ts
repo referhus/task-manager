@@ -11,8 +11,9 @@ const tasks: ITask = [
 export default class Task {
   async getTasks() {
     try {
-      const success = await getMockData(tasks)
-      return success.data
+      const success = await fetch('http://localhost:3000/api/tasks')
+      const result = await success.json()
+      return result.data
     } catch (err) {
       return err
     }

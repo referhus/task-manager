@@ -35,7 +35,7 @@ const actions = {
   async getTasks ({ commit }) {
     const data = await $apiV1.task.getTasks()
 
-    commit('setTasks', data)
+    commit('setTasks', data.tasks)
   },
 
   async postNewTask({ commit }, task: ITask) {

@@ -1,12 +1,6 @@
 # task-manager
 
-## FRONTEND 
-
-### Project Setup
-
-```sh
-cd client
-```
+## Project Setup
 
 ```sh
 npm install
@@ -29,26 +23,3 @@ npm run build
 ```sh
 npm run lint
 ```
-
-## BACKEND
-
-### Project setup
-
-```bash
-cd server
-```
-
-```bash
-npm install
-```
-
-### Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-```
-
